@@ -56,6 +56,50 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .side-rail nav button svg { font-size: 21px; }
 .side-rail nav button:hover, .side-rail nav button.active { color: var(--accent); background: var(--accent-soft); }
 .rail-settings { width: 44px; height: 44px; margin-top: auto; border: 1px solid var(--line); border-radius: 13px; font-size: 21px; }
+.rail-ai-toggle { margin-top: 0; }
+.rail-ai-toggle.active { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+
+.ai-panel {
+  position: fixed;
+  z-index: 25;
+  inset: 0 0 0 auto;
+  display: flex;
+  width: 340px;
+  flex-direction: column;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
+}
+.ai-head { display: flex; align-items: center; gap: 10px; padding: 16px 14px 10px; }
+.ai-head .ai-badge { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 14px; color: #fff; background: var(--accent); font-size: 20px; }
+.ai-head > div { display: grid; min-width: 0; gap: 2px; }
+.ai-head strong { font-size: 13px; }
+.ai-head small { color: var(--muted); font-size: 9px; line-height: 1.4; }
+.ai-head-actions { display: flex; gap: 4px; margin-left: auto; }
+.ai-head-actions button { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: transparent; font-size: 15px; }
+.ai-head-actions button:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.ai-provider-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0 14px 8px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.ai-provider-switch button { min-height: 30px; border: 0; border-radius: 9px; color: var(--muted); background: transparent; font-size: 11px; }
+.ai-provider-switch button.active { color: var(--accent); background: var(--surface); box-shadow: 0 4px 12px rgba(67, 57, 43, .1); }
+.ai-settings { display: grid; gap: 8px; margin: 0 14px 10px; padding: 12px; border: 1px dashed var(--line); border-radius: 12px; background: var(--surface-2); }
+.ai-settings label { display: grid; gap: 4px; color: var(--ink); font-size: 10px; }
+.ai-settings input { min-height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--surface); font-size: 11px; }
+.ai-settings small { color: var(--muted); font-size: 9px; line-height: 1.5; }
+.ai-messages { display: flex; overflow-y: auto; flex: 1; flex-direction: column; gap: 8px; padding: 10px 14px; scroll-behavior: smooth; }
+.ai-bubble { max-width: 88%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 13px; font-size: 11px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.ai-bubble.user { align-self: flex-end; color: #fff; border: 0; background: var(--accent); }
+.ai-bubble.assistant { align-self: flex-start; background: var(--surface-2); }
+.ai-bubble.assistant.error { border-color: color-mix(in srgb, #c0392b 40%, var(--line)); color: #a02d1d; background: #fdf1ef; }
+.ai-bubble.pending { color: var(--muted); font-style: italic; }
+.ai-empty { display: grid; gap: 6px; align-content: start; justify-items: center; margin: auto; padding: 20px; color: var(--muted); font-size: 10px; text-align: center; }
+.ai-empty svg { font-size: 26px; color: var(--accent); }
+.ai-empty p { margin: 0; color: var(--ink); font-size: 12px; }
+.ai-input { display: flex; gap: 8px; padding: 12px 14px 14px; border-top: 1px solid var(--line); background: var(--surface); }
+.ai-input textarea { flex: 1; resize: none; padding: 9px 11px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface-2); font-size: 11px; line-height: 1.5; }
+.ai-input button { display: grid; width: 42px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 12px; color: #fff; background: var(--accent); font-size: 18px; }
+.ai-input button:disabled { opacity: .45; cursor: not-allowed; }
+
+.app-shell.ai-open .workbench { width: min(100% - 76px - 340px, 1516px); margin-right: 340px; }
+.app-shell.ai-open .toast { right: 362px; }
 
 .workbench {
   width: min(100% - 76px, 1516px);
@@ -663,7 +707,9 @@ progress::-moz-progress-bar { border-radius: 99px; background: var(--accent); }
 @media (max-width: 760px) {
   body { padding-bottom: 72px; }
   .side-rail { display: none; }
-  .workbench { width: 100%; margin: 0; padding: 15px 14px 45px; }
+  .workbench, .app-shell.ai-open .workbench { width: 100%; margin: 0; padding: 15px 14px 45px; }
+  .ai-panel { top: 0; right: 0; bottom: 72px; z-index: 40; width: min(85vw, 340px); box-shadow: -18px 0 50px rgba(67, 57, 43, .18); }
+  .ai-messages { padding-bottom: 8px; }
   .topbar { margin-bottom: 13px; }
   .identity-block .avatar { width: 38px; height: 38px; border-radius: 13px; }
   .identity-block strong { font-size: 12px; }
@@ -693,7 +739,7 @@ progress::-moz-progress-bar { border-radius: 99px; background: var(--accent); }
   .review-fields label { grid-template-columns: 1fr; gap: 6px; }
   .workbench-footer { align-items: start; flex-direction: column; }
   .workbench-footer p { line-height: 1.6; }
-  .mobile-nav { position: fixed; z-index: 30; right: 10px; bottom: 8px; left: 10px; display: grid; height: 62px; grid-template-columns: repeat(5, 1fr); align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 20px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 18px 45px rgba(67, 57, 43, .16); backdrop-filter: blur(14px); }
+  .mobile-nav { position: fixed; z-index: 30; right: 10px; bottom: 8px; left: 10px; display: grid; height: 62px; grid-template-columns: repeat(6, 1fr); align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 20px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 18px 45px rgba(67, 57, 43, .16); backdrop-filter: blur(14px); }
   .mobile-nav button { display: grid; gap: 3px; place-items: center; border: 0; color: var(--muted); background: transparent; font-size: 9px; }
   .mobile-nav button svg { font-size: 20px; }
   .mobile-nav button.active { color: var(--accent); }

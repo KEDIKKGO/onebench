@@ -84,6 +84,16 @@ import {
 } from '@phosphor-icons/react'
 import morningArt from './assets/workbench-morning.webp'
 import bundledRegistry from '../packages/community-registry/registry.json'
+import { AiPanel } from './AiPanel'
+import {
+  persistAiConfig,
+  persistAiOpen,
+  persistAiProvider,
+  readAiConfig,
+  readAiMessages,
+  readAiOpen,
+  readAiProvider,
+} from './lib/ai-chat'
 import { findModule, moduleCatalog, moduleKinds } from './data/modules'
 import { findPack, packs } from './data/packs'
 import { scenarioCatalog } from './data/scenarios'
@@ -374,6 +384,10 @@ export function App() {
   const [editionMode, setEditionMode] = useState(() => embeddedSeed?.edition || localStorage.getItem('onebench.edition') || 'basic')
   const [ownedSeed, setOwnedSeed] = useState(null)
   const [weatherStatus, setWeatherStatus] = useState('')
+  const [aiOpen, setAiOpen] = useState(readAiOpen)
+  const [aiProvider, setAiProvider] = useState(readAiProvider)
+  const [aiConfig, setAiConfig] = useState(readAiConfig)
+  const [aiMessages, setAiMessages] = useState(readAiMessages)
   const drawerRef = useRef(null)
   const avatarInputRef = useRef(null)
   const backupInputRef = useRef(null)
@@ -1153,7 +1167,7 @@ export function App() {
   ]
 
   return (
-    <div className="app-shell" style={theme.tokens} data-theme={theme.id}>
+    <div className={`app-shell ${aiOpen ? 'ai-open' : ''}`} style={theme.tokens} data-theme={theme.id}>
       <aside className="side-rail" aria-label="工作台主导航">
         <button className="brand-mark" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部"><StackSimple weight="fill" /></button>
         <nav>
@@ -1166,6 +1180,7 @@ export function App() {
           <button type="button" onClick={() => setPanel('apps')}><ListDashes weight="duotone" /><span>全部</span></button>
           <button type="button" onClick={() => setPanel('market')}><SquaresFour weight="duotone" /><span>市场</span></button>
         </nav>
+        <button className={`rail-settings rail-ai-toggle ${aiOpen ? 'active' : ''}`} type="button" onClick={() => { const next = !aiOpen; setAiOpen(next); persistAiOpen(next) }} aria-label="打开或收起 AI 助理"><Robot weight="duotone" /></button>
         <button className="rail-settings" type="button" onClick={() => setPanel('studio')} aria-label="打开定制"><GearSix weight="duotone" /></button>
       </aside>
 
@@ -1423,10 +1438,24 @@ export function App() {
         </footer>
       </main>
 
+      <AiPanel
+        open={aiOpen}
+        onClose={() => { setAiOpen(false); persistAiOpen(false) }}
+        provider={aiProvider}
+        onProviderChange={(next) => { setAiProvider(next); persistAiProvider(next) }}
+        config={aiConfig}
+        onConfigChange={(next) => { setAiConfig(next); persistAiConfig(next) }}
+        messages={aiMessages}
+        setMessages={setAiMessages}
+        workspace={workspace}
+        workspaceData={workspaceData}
+      />
+
       <nav className="mobile-nav" aria-label="手机底部导航">
         <button className="active" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><House weight="fill" /><span>首页</span></button>
         <button type="button" onClick={() => editModule('calendar')}><CalendarBlank weight="duotone" /><span>日历</span></button>
         <button className="mobile-add" type="button" onClick={() => document.querySelector('.add-task input')?.focus()} aria-label="添加任务"><Plus weight="bold" /></button>
+        <button type="button" onClick={() => { const next = !aiOpen; setAiOpen(next); persistAiOpen(next) }}><Robot weight="duotone" /><span>AI</span></button>
         <button type="button" onClick={() => setPanel('apps')}><ListDashes weight="duotone" /><span>应用</span></button>
         <button type="button" onClick={() => setPanel('editions')}><StackSimple weight="duotone" /><span>版本</span></button>
       </nav>
