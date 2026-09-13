@@ -404,7 +404,9 @@ export function App() {
   )
 
   useEffect(() => {
-    saveWorkspace(workspace)
+    if (embeddedSeed) {
+      saveWorkspace(workspace)
+    }
   }, [])
 
   useEffect(() => {
