@@ -148,7 +148,8 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
             <>
               <label>云端服务地址（OpenAI 兼容）<input value={config.cloudUrl} onChange={updateConfig('cloudUrl')} placeholder="https://api.openai.com" /></label>
               <label>模型名称<input value={config.cloudModel} onChange={updateConfig('cloudModel')} placeholder={defaultAiConfig.cloudModel} /></label>
-              <small>提示：Key 仅保存在本机浏览器 localStorage，不会写入仓库或上传。</small>
+              <label>对话 API Key（DeepSeek 等）<input type="password" value={config.cloudKey} onChange={updateConfig('cloudKey')} placeholder="sk-..." /></label>
+              <small>提示：Key 仅保存在本机浏览器 localStorage，不会写入仓库或上传。对话用 DeepSeek 的 Key，语音识别用 SiliconFlow 的 Key，两者相互独立。</small>
             </>
           )}
           <div className="ai-settings-divider">语音（识别与朗读）</div>

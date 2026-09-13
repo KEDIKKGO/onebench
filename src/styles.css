@@ -82,7 +82,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .ai-provider-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0 14px 8px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
 .ai-provider-switch button { min-height: 30px; border: 0; border-radius: 9px; color: var(--muted); background: transparent; font-size: 11px; }
 .ai-provider-switch button.active { color: var(--accent); background: var(--surface); box-shadow: 0 4px 12px rgba(67, 57, 43, .1); }
-.ai-settings { display: grid; gap: 8px; margin: 0 14px 10px; padding: 12px; border: 1px dashed var(--line); border-radius: 12px; background: var(--surface-2); }
+.ai-settings { display: grid; gap: 8px; margin: 0 14px 10px; padding: 12px; border: 1px dashed var(--line); border-radius: 12px; background: var(--surface-2); max-height: 48vh; overflow-y: auto; }
 .ai-settings label { display: grid; gap: 4px; color: var(--ink); font-size: 10px; }
 .ai-settings input { min-height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--surface); font-size: 11px; }
 .ai-settings small { color: var(--muted); font-size: 9px; line-height: 1.5; }
@@ -97,7 +97,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .ai-mic { display: grid; width: 42px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface-2); font-size: 18px; }
 .ai-mic.recording { color: #fff; border: 0; background: #d9534f; animation: ai-pulse 1.2s ease-in-out infinite; }
 @keyframes ai-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
-.ai-messages { display: flex; overflow-y: auto; flex: 1; flex-direction: column; gap: 8px; padding: 10px 14px; scroll-behavior: smooth; }
+.ai-messages { display: flex; overflow-y: auto; flex: 1; min-height: 90px; flex-direction: column; gap: 8px; padding: 10px 14px; scroll-behavior: smooth; }
 .ai-bubble { max-width: 88%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 13px; font-size: 11px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
 .ai-bubble.user { align-self: flex-end; color: #fff; border: 0; background: var(--accent); }
 .ai-bubble.assistant { align-self: flex-start; background: var(--surface-2); }
