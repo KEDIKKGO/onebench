@@ -739,6 +739,13 @@ export function App() {
       updateData((data) => ({ ...data, news: result.items, newsMeta: { updatedAt: result.updatedAt, provider: result.provider, query: result.query } }))
       setLiveStatus((current) => ({ ...current, news: `已更新 ${result.items.length} 条资讯，断网时继续显示这份缓存。` }))
     } catch (error) {
+      // 本地离线版：联网取不到时用内嵌的公开资讯快照，避免出现空白
+      const offline = embeddedSeed?.offlineNews
+      if (offline?.items?.length) {
+        updateData((data) => ({ ...data, news: offline.items.slice(0, 12), newsMeta: { updatedAt: offline.updatedAt, provider: '离线快照（生成工作台时内置）', query: '' } }))
+        setLiveStatus((current) => ({ ...current, news: '联网获取失败，已载入内置离线资讯快照。' }))
+        return
+      }
       setLiveStatus((current) => ({ ...current, news: `${error.message || '更新失败'}，已保留离线缓存。` }))
     }
   }
@@ -746,7 +753,7 @@ export function App() {
   async function refreshRssData() {
     setLiveStatus((current) => ({ ...current, rss: '正在读取 RSS…' }))
     try {
-      const result = await fetchRssFeed(workspaceData.rss?.feedUrl)
+      const result = await fetchRssFeed(workspaceData.rss?.feedUrl, 10, workspaceData.rss?.proxy || '')
       updateData((data) => ({ ...data, rss: result }))
       setLiveStatus((current) => ({ ...current, rss: `已读取 ${result.items.length} 篇内容。` }))
     } catch (error) {
@@ -1571,7 +1578,7 @@ export function App() {
                 )}
 
                 {editorModuleId === 'rss' && (
-                  <section><h3>添加 RSS 订阅源</h3><p className="section-copy">先选一个默认源，也可以粘贴自己的 RSS 地址。默认源会显示中文内容，并保留最近一次缓存。</p><div className="rss-presets">{defaultRssSources.map((source) => <button type="button" key={source.id} className={workspaceData.rss?.feedUrl === source.url ? 'selected' : ''} onClick={() => chooseRssSource(source)}><strong>{source.name}</strong><small>{source.tags}</small></button>)}</div><label>RSS 地址<input type="url" value={workspaceData.rss?.feedUrl || ''} onChange={(event) => updateData({ ...workspaceData, rss: { ...workspaceData.rss, feedUrl: event.target.value } })} placeholder="https://example.com/feed.xml" /></label><button className="primary-button" type="button" onClick={refreshRssData}><Rss /> 读取订阅</button>{liveStatus.rss && <p className="sync-status">{liveStatus.rss}</p>}<p className="section-copy">只读取你主动填写的公开订阅地址，并保留最近一次缓存。</p></section>
+                  <section><h3>添加 RSS 订阅源</h3><p className="section-copy">先选一个默认源，也可以粘贴自己的 RSS 地址。默认源会显示中文内容，并保留最近一次缓存。</p><div className="rss-presets">{defaultRssSources.map((source) => <button type="button" key={source.id} className={workspaceData.rss?.feedUrl === source.url ? 'selected' : ''} onClick={() => chooseRssSource(source)}><strong>{source.name}</strong><small>{source.tags}</small></button>)}</div><label>RSS 地址<input type="url" value={workspaceData.rss?.feedUrl || ''} onChange={(event) => updateData({ ...workspaceData, rss: { ...workspaceData.rss, feedUrl: event.target.value } })} placeholder="https://example.com/feed.xml" /></label><label>RSS 代理地址（选填）<input type="url" value={workspaceData.rss?.proxy || ''} onChange={(event) => updateData({ ...workspaceData, rss: { ...workspaceData.rss, proxy: event.target.value } })} placeholder="https://你的代理地址/rss?url=" /></label><p className="section-copy">如果某个订阅源提示无法直连，说明它不允许跨域读取。可在此填写自己的 RSS 代理服务地址（例如自建 Cloudflare Worker），留空则只使用内置公共源和允许跨域的订阅源。</p><button className="primary-button" type="button" onClick={refreshRssData}><Rss /> 读取订阅</button>{liveStatus.rss && <p className="sync-status">{liveStatus.rss}</p>}<p className="section-copy">只读取你主动填写的公开订阅地址，并保留最近一次缓存。</p></section>
                 )}
 
                 {editorModuleId === 'exchange-rates' && (

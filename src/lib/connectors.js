@@ -102,7 +102,7 @@ export async function fetchRoleNews({ roleId, topics, limit = 10 } = {}) {
   }
 }
 
-export async function fetchRssFeed(feedUrl, limit = 10) {
+export async function fetchRssFeed(feedUrl, limit = 10, proxy = '') {
   const normalized = String(feedUrl || '').trim()
   if (!/^https?:\/\//i.test(normalized)) throw new Error('请输入完整的 RSS 地址')
   try {
@@ -119,6 +119,14 @@ export async function fetchRssFeed(feedUrl, limit = 10) {
     return payload
   } catch {}
 
+  // 自定义代理（用户在模块设置里填写，用于跨域受限的订阅源）
+  if (proxy) {
+    try {
+      const payload = await fetchJson(`${proxy.replace(/\?.*$/, '')}?url=${encodeURIComponent(normalized)}&limit=${limit}`)
+      return { ...payload, provider: payload.provider || '自定义代理' }
+    } catch {}
+  }
+
   try {
     const response = await fetch(normalized, { headers: { Accept: 'application/atom+xml, application/rss+xml, application/xml, text/xml;q=0.9' } })
     if (!response.ok) throw new Error(`HTTP ${response.status}`)
@@ -133,16 +141,43 @@ export async function fetchRssFeed(feedUrl, limit = 10) {
 export async function fetchExchangeRates(base = 'CNY', symbols = ['USD', 'EUR', 'JPY', 'HKD']) {
   const normalizedBase = String(base || 'CNY').toUpperCase()
   const normalizedSymbols = symbols.map((item) => String(item).trim().toUpperCase()).filter(Boolean).filter((item) => item !== normalizedBase).slice(0, 6)
-  const response = await fetch(`https://api.frankfurter.app/latest?from=${encodeURIComponent(normalizedBase)}&to=${encodeURIComponent(normalizedSymbols.join(','))}`)
-  if (!response.ok) throw new Error(`汇率服务暂时不可用（${response.status}）`)
-  const payload = await response.json()
-  return {
-    base: payload.base || normalizedBase,
-    rates: Object.entries(payload.rates || {}).map(([currency, value]) => ({ currency, value })),
-    date: payload.date,
-    updatedAt: new Date().toISOString(),
-    provider: 'Frankfurter / ECB',
+  const errors = []
+
+  // 主源：open.er-api.com（免 Key、支持跨域）
+  try {
+    const response = await fetch(`https://open.er-api.com/v6/latest/${encodeURIComponent(normalizedBase)}`)
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const payload = await response.json()
+    if (payload.result !== 'success' || !payload.rates) throw new Error('返回数据格式异常')
+    const wanted = normalizedSymbols.length ? normalizedSymbols : ['USD', 'EUR', 'JPY', 'HKD']
+    return {
+      base: payload.base_code || normalizedBase,
+      rates: wanted.filter((currency) => payload.rates[currency] != null).map((currency) => ({ currency, value: payload.rates[currency] })),
+      date: (payload.time_last_update_utc || '').slice(0, 16),
+      updatedAt: new Date().toISOString(),
+      provider: 'open.er-api.com',
+    }
+  } catch (error) {
+    errors.push(`主源失败：${error.message || error}`)
   }
+
+  // 备用源：Frankfurter（ECB）
+  try {
+    const response = await fetch(`https://api.frankfurter.dev/v1/latest?base=${encodeURIComponent(normalizedBase)}&symbols=${encodeURIComponent(normalizedSymbols.join(','))}`)
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const payload = await response.json()
+    return {
+      base: payload.base || normalizedBase,
+      rates: Object.entries(payload.rates || {}).map(([currency, value]) => ({ currency, value })),
+      date: payload.date,
+      updatedAt: new Date().toISOString(),
+      provider: 'Frankfurter / ECB',
+    }
+  } catch (error) {
+    errors.push(`备用源失败：${error.message || error}`)
+  }
+
+  throw new Error(`汇率服务暂时不可用（${errors.join('；')}）`)
 }
 
 export async function fetchGitHubActivity(username) {

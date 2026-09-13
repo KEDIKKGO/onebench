@@ -32,5 +32,12 @@ try {
 
 const workspace = createWorkspace({ packId, prompt, displayName, workspaceName })
 const template = await readFile(runtime, 'utf8')
-await writeFile(output, exportDesktopHtml(workspace, defaultWorkspaceData(workspace), template, { edition: requestedEdition }), 'utf8')
+
+// 内嵌一份公开资讯快照：本地离线版无法读取线上 data/news.json，断网时仍能显示内容
+let offlineNews = null
+try {
+  offlineNews = JSON.parse(await readFile(resolve(root, 'public/data/news.json'), 'utf8'))
+} catch { offlineNews = null }
+
+await writeFile(output, exportDesktopHtml(workspace, defaultWorkspaceData(workspace), template, { edition: requestedEdition, offlineNews }), 'utf8')
 console.log(`已生成本地工作台：${output}`)
