@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-13T18:47:47.159Z",
-  "expiresAt": "2026-09-14T00:47:47.159Z",
+  "generatedAt": "2026-09-13T22:25:20.476Z",
+  "expiresAt": "2026-09-14T04:25:20.476Z",
   "provider": "OneBench 公共资讯快照",
   "sources": [
     {
@@ -31,6 +31,168 @@
     }
   ],
   "items": [
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/sh/2026/09-14/10695875.shtml",
+      "title": "求职背调，不可越界失序",
+      "category": "综合",
+      "summary": "“找工作，先过背调关。”如今，背景调查成了不少求职者的共同经历。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/sh/2026/09-14/10695875.shtml",
+      "publishedAt": "2026-09-13T22:18:31.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/cj/2026/09-14/10695874.shtml",
+      "title": "“词元贷”给人工智能企业“贷”来什么？",
+      "category": "综合",
+      "summary": "广东率先探索以词元消耗等数字化指标授信——",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/cj/2026/09-14/10695874.shtml",
+      "publishedAt": "2026-09-13T22:12:04.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/cj/2026/09-14/10695873.shtml",
+      "title": "词元出海怎么实现？服贸会上有答案",
+      "category": "综合",
+      "summary": "词元出海怎么实现？服贸会上有答案(财米油盐)",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/cj/2026/09-14/10695873.shtml",
+      "publishedAt": "2026-09-13T22:09:58.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/gj/2026/09-14/10695872.shtml",
+      "title": "日本自民党支持的候选人当选冲绳县知事",
+      "category": "综合",
+      "summary": "据日本方面消息，在13日举行的日本冲绳县知事选举中，受自民党等政党支持的冲绳首府那霸市前副市长古谢玄太确定当选。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/gj/2026/09-14/10695872.shtml",
+      "publishedAt": "2026-09-13T22:00:04.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/gj/2026/09-14/10695871.shtml",
+      "title": "克罗地亚布拉奇岛发生山火 近700人被疏散",
+      "category": "综合",
+      "summary": "近日，克罗地亚布拉奇岛发生大规模山火。当地时间12日夜间，火势向该岛的米尔纳镇及附近海湾蔓延，近700名当地居民和游客被紧急疏散。当地消防部门出动了4架消防飞机参与灭火。13日，山火仍未被完全扑灭，目前过火面积已达到3500公顷。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/gj/2026/09-14/10695871.shtml",
+      "publishedAt": "2026-09-13T21:58:53.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/gj/2026/09-14/10695870.shtml",
+      "title": "无视英国反对 特朗普再挺“爱尔兰统一”",
+      "category": "综合",
+      "summary": "据相关消息，美国总统特朗普13日再次表示，他支持北爱尔兰脱离英国，“与爱尔兰统一”。此前一天，特朗普发表类似言论，已引发英国政界强烈反对。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/gj/2026/09-14/10695870.shtml",
+      "publishedAt": "2026-09-13T21:57:55.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/txy/2026/09-14/10695869.shtml",
+      "title": "英国中区侨界庆祝新中国成立77周年",
+      "category": "综合",
+      "summary": "中新社伯明翰9月13日电 (记者 欧阳开宇)当地时间9月13日，英国中区各界华侨华人齐聚伯明翰，举办庆祝中华人民共和国成立77周年主题庆典活动。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/txy/2026/09-14/10695869.shtml",
+      "publishedAt": "2026-09-13T21:44:58.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/ty/2026/09-14/10695868.shtml",
+      "title": "攀岩世界杯贵阳站收官战：中国选手夺2金1银破世界纪录",
+      "category": "综合",
+      "summary": "中新社贵阳9月14日电 (记者 张伟)2026年世界攀联攀岩世界杯(中国贵阳)13日晚在贵州·彩湖国际攀岩中心迎来收官战。中国选手包揽男、女速度接力的2块金牌，并拿下男子项目银牌。中国选手赵一程、零勇志还以9.58秒的成绩创造男子速度接力新世界纪录。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/ty/2026/09-14/10695868.shtml",
+      "publishedAt": "2026-09-13T21:44:22.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
+    {
+      "id": "chinanews-scroll-https://www.chinanews.com.cn/ty/2026/09-14/10695867.shtml",
+      "title": "双人组赛亮相，斯巴达勇士赛成都站亮点多",
+      "category": "综合",
+      "summary": "中新网9月14日电 过去的周末，2026斯巴达勇士赛成都站在郫都区三道堰青杠树景区举行，这是斯巴达勇士赛连续第二年落地成都。",
+      "source": "中国新闻网",
+      "sourceId": "chinanews-scroll",
+      "url": "https://www.chinanews.com.cn/ty/2026/09-14/10695867.shtml",
+      "publishedAt": "2026-09-13T21:43:50.000Z",
+      "tags": [
+        "国内",
+        "社会",
+        "财经",
+        "教育",
+        "健康"
+      ],
+      "hot": false
+    },
     {
       "id": "chinanews-scroll-https://www.chinanews.com.cn/gj/2026/09-14/10695866.shtml",
       "title": "特朗普重申伊朗战事将在中期选举后结束",
@@ -400,168 +562,6 @@
       "sourceId": "chinanews-scroll",
       "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695768.shtml",
       "publishedAt": "2026-09-13T13:22:25.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695764.shtml",
-      "title": "欧洲9国考察团探访贺兰山东麓 品味宁夏“紫色名片”",
-      "category": "综合",
-      "summary": "图为考察团在酒庄品鉴大厅品尝红酒。中新社记者 于晶 摄 图为考察团在酒庄品鉴大厅品尝红酒。中新社记者 于晶 摄 图为考察团在酒庄品鉴大厅品尝红酒。中新社记者 于晶 摄 图为考察团参观酒庄发酵车间。中新社记者 于晶 摄",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695764.shtml",
-      "publishedAt": "2026-09-13T13:20:49.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695763.shtml",
-      "title": "青海西宁120组亲子家庭湿地公园体验生态趣味课堂",
-      "category": "综合",
-      "summary": "图为亲子家庭参与湿地生态乐跑。中新社记者 马铭言 摄 图为青少年通过游戏学习生态保护知识。中新社记者 马铭言 摄 图为亲子协作游戏了解野生动物生活习性。中新社记者 马铭言 摄 图为家长向青少年介绍科普展板内容。中新社记者 马铭言 摄 图为青少年通过游戏了解野生动物栖息地。中新社记者 马铭言 摄",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695763.shtml",
-      "publishedAt": "2026-09-13T13:19:16.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695761.shtml",
-      "title": "2026 IRONMAN 70.3云南大理站开赛",
-      "category": "综合",
-      "summary": "9月13日，选手正在自行车比赛中。中新社记者 李嘉娴 摄 9月13日，选手正在自行车比赛中。中新社记者 李嘉娴 摄 9月13日，选手正在游泳比赛中。中新社记者 李嘉娴 摄 9月13日，选手正在自行车比赛中。中新社记者 李嘉娴 摄 9月13日，中国选手李鹏程以3:51:23获得男子分龄组全场冠军并创造个人最好成绩。中新社记者 李嘉娴 摄",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695761.shtml",
-      "publishedAt": "2026-09-13T13:18:20.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695760.shtml",
-      "title": "2026中国和美乡村自行车赛在河北邯郸开赛",
-      "category": "综合",
-      "summary": "图为参赛选手从起点出发。王洪超 摄 图为参赛选手到达终点。王洪超 摄 图为参赛选手参加颁奖仪式。王洪超 摄 图为参赛选手在观岭山赛段骑行。王洪超 摄 图为参赛选手在花海绿廊中骑行。王洪超 摄 图为参赛选手在沁河郊野公园赛段骑行。聂长青 摄 图为参赛选手在乡间林荫道路骑行。侯建信 摄",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695760.shtml",
-      "publishedAt": "2026-09-13T13:17:20.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695759.shtml",
-      "title": "2026贵阳国际网球公开赛女单决赛举行",
-      "category": "综合",
-      "summary": "9月13日，舒布拉泽在赢球后庆祝。中新社记者 瞿宏伦 摄 9月13日，舒布拉泽在比赛中。中新社记者 瞿宏伦 摄 9月13日，舒布拉泽在比赛中。中新社记者 瞿宏伦 摄 9月13日，任钰菲在比赛中。中新社记者 瞿宏伦 摄 9月13日，女子单打决赛吸引球迷观看。中新社记者 瞿宏伦 摄 9月13日，舒布拉泽捧起奖杯。中新社记者 瞿宏伦 摄 9月13日，任钰菲(左)和",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695759.shtml",
-      "publishedAt": "2026-09-13T13:16:10.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695758.shtml",
-      "title": "广州：“第12届欧亚MEDIATIONS数字艺术双年展”吸引参观者",
-      "category": "综合",
-      "summary": "9月13日，“数字物种：第12届欧亚MEDIATIONS数字艺术双年展”吸引参观者。中新社记者 陈楚红 摄 9月13日，“数字物种：第12届欧亚MEDIATIONS数字艺术双年展”吸引参观者。中新社记者 陈楚红 摄 9月13日，“数字物种：第12届欧亚MEDIATIONS数字艺术双年展”展出艺术家袁隆的《可持续共鸣体》，吸引参观者。中新社记者 陈楚红 摄",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695758.shtml",
-      "publishedAt": "2026-09-13T13:15:16.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695756.shtml",
-      "title": "（活力中国调研行）河南确山：“提琴之乡”赶制订单忙",
-      "category": "综合",
-      "summary": "9月12日，河南确山一家提琴企业内，小提琴整齐摆放。赵梦阳 摄 9月12日，河南确山，当地提琴企业和手工作坊正在加紧赶制各类提琴订单。赵梦阳 摄 9月12日，河南确山一家提琴企业内，年轻人在演奏提琴。赵梦阳 摄 9月12日，河南确山，当地提琴企业和手工作坊正在加紧赶制各类提琴订单。赵梦阳 摄 9月12日，河南确山，当地提琴企业和手工作坊正在加紧赶制各类提琴订",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695756.shtml",
-      "publishedAt": "2026-09-13T13:14:24.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/tp/2026/09-13/10695755.shtml",
-      "title": "成都宠博会上演宠物T台秀",
-      "category": "综合",
-      "summary": "9月13日，四川成都，一场时尚与萌趣的宠物T台秀在成都宠博会上演。萌犬萌猫身着各式精致服饰被主人带上T台，对现场观众展现萌宠魅力。中新社记者 张浪 摄 9月13日，四川成都，一场时尚与萌趣的宠物T台秀在成都宠博会上演。萌犬萌猫身着各式精致服饰被主人带上T台，对现场观众展现萌宠魅力。中新社记者 张浪 摄 9月13日，四川成都，一场时尚与萌趣的宠物T台秀在成都宠",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/tp/2026/09-13/10695755.shtml",
-      "publishedAt": "2026-09-13T13:11:10.000Z",
-      "tags": [
-        "国内",
-        "社会",
-        "财经",
-        "教育",
-        "健康"
-      ],
-      "hot": false
-    },
-    {
-      "id": "chinanews-scroll-https://www.chinanews.com.cn/gn/2026/09-13/10695835.shtml",
-      "title": "习近平结束出席金砖国家领导人第十八次会晤回到北京",
-      "category": "综合",
-      "summary": "新华社快讯：9月13日晚，国家主席习近平圆满结束出席金砖国家领导人第十八次会晤回到北京。",
-      "source": "中国新闻网",
-      "sourceId": "chinanews-scroll",
-      "url": "https://www.chinanews.com.cn/gn/2026/09-13/10695835.shtml",
-      "publishedAt": "2026-09-13T13:10:06.000Z",
       "tags": [
         "国内",
         "社会",
