@@ -346,6 +346,19 @@ function MetricTiles({ items }) {
   )
 }
 
+const RAIL_MODULES_KEY = 'onebench.rail.modules'
+
+function readRailModules() {
+  try {
+    const list = JSON.parse(localStorage.getItem(RAIL_MODULES_KEY) || '[]')
+    return Array.isArray(list) ? list : []
+  } catch { return [] }
+}
+
+function persistRailModules(list) {
+  try { localStorage.setItem(RAIL_MODULES_KEY, JSON.stringify(list)) } catch { /* ignore */ }
+}
+
 export function App() {
   const embeddedSeed = useMemo(readEmbeddedSeed, [])
   const initialWorkspace = useMemo(() => {
@@ -388,6 +401,7 @@ export function App() {
   const [aiProvider, setAiProvider] = useState(readAiProvider)
   const [aiConfig, setAiConfig] = useState(readAiConfig)
   const [aiMessages, setAiMessages] = useState(readAiMessages)
+  const [railModules, setRailModules] = useState(readRailModules)
   const drawerRef = useRef(null)
   const avatarInputRef = useRef(null)
   const backupInputRef = useRef(null)
@@ -569,6 +583,18 @@ export function App() {
     setTimerSeconds((nextData.focus?.minutes || 25) * 60)
     setToast(result.summary)
     setPanel(null)
+  }
+
+  // 侧栏只放常用入口；未自定义时用职业包推荐的默认值
+  const defaultRailIds = useMemo(() => [...(PACK_HOME_MODULES[pack.id] || ['calendar', 'tasks', 'quick-note', 'goals']).slice(0, 4), 'news'].filter((id, index, list) => activeModuleIds.has(id) && list.indexOf(id) === index).slice(0, 6), [pack.id, activeModuleIds])
+  const railIds = (railModules.length ? railModules : defaultRailIds).filter((id, index, list) => activeModuleIds.has(id) && list.indexOf(id) === index)
+  const isInRail = (id) => railIds.includes(id)
+  function toggleRailModule(id) {
+    const base = railModules.length ? railModules : defaultRailIds
+    const next = base.includes(id) ? base.filter((item) => item !== id) : [...base, id]
+    setRailModules(next)
+    persistRailModules(next)
+    setToast(base.includes(id) ? '已从侧边栏移除，仍可在「全部」里打开。' : '已加入侧边栏。')
   }
 
   function updateData(recipe) {
@@ -1201,7 +1227,7 @@ export function App() {
         <button className="brand-mark" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="回到顶部"><StackSimple weight="fill" /></button>
         <nav>
           <button className="active" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><House weight="fill" /><span>首页</span></button>
-          {[...(PACK_HOME_MODULES[pack.id] || ['calendar', 'tasks', 'quick-note', 'goals']).slice(0, 4), 'news', 'rss'].filter((id, index, list) => activeModuleIds.has(id) && list.indexOf(id) === index).slice(0, 6).map((id) => {
+          {railIds.map((id) => {
             const item = findModule(id)
             const Icon = item.icon
             return <button type="button" key={id} onClick={() => editModule(id)}><Icon weight="duotone" /><span>{item.name}</span></button>
@@ -1518,8 +1544,8 @@ export function App() {
 
             {panel === 'apps' && (
               <div className="drawer-body">
-                <div className="simple-callout"><SidebarSimple weight="duotone" /><div><strong>侧边栏是应用入口，首页是小组件画布</strong><p>放到侧边栏不会删除数据；需要每天看见的内容，再添加到首页。</p></div></div>
-                <section><h3>已安装应用</h3><div className="app-library">{workspace.modules.filter((module) => findModule(module.id)?.category !== '系统').map((module) => { const item = findModule(module.id); const Icon = item.icon; return <article key={module.id}><button type="button" onClick={() => editModule(module.id)}><Icon weight="duotone" /><span><strong>{item.name}</strong><small>{item.description}</small></span><ArrowRight /></button><button className={module.placement === 'home' ? 'on-home' : ''} type="button" onClick={() => moveModule(module.id, module.placement === 'home' ? 'sidebar' : 'home')}>{module.placement === 'home' ? '移出首页' : '放到首页'}</button></article> })}</div></section>
+                <div className="simple-callout"><SidebarSimple weight="duotone" /><div><strong>侧边栏只放常用入口，其余都在「全部」里</strong><p>用右侧「侧栏」按钮决定哪些应用出现在左侧菜单；移除不会删除数据，随时在这里打开或加回侧栏。</p></div></div>
+                <section><h3>已安装应用</h3><div className="app-library">{workspace.modules.filter((module) => findModule(module.id)?.category !== '系统').map((module) => { const item = findModule(module.id); const Icon = item.icon; return <article key={module.id}><button type="button" onClick={() => editModule(module.id)}><Icon weight="duotone" /><span><strong>{item.name}</strong><small>{item.description}</small></span><ArrowRight /></button><div className="app-toggles"><button className={module.placement === 'home' ? 'on-home' : ''} type="button" onClick={() => moveModule(module.id, module.placement === 'home' ? 'sidebar' : 'home')}>{module.placement === 'home' ? '移出首页' : '放到首页'}</button><button className={isInRail(module.id) ? 'is-on' : 'is-off'} type="button" onClick={() => toggleRailModule(module.id)}>{isInRail(module.id) ? '侧栏显示中' : '不在侧栏'}</button></div></article> })}</div></section>
                 <button className="secondary-button wide-button" type="button" onClick={() => setPanel('market')}><SquaresFour weight="duotone" /> 去模块市场添加更多</button>
               </div>
             )}
