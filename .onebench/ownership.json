@@ -1,0 +1,8 @@
+{
+  "format": "onebench-ownership/v1",
+  "repository": "KEDIKKGO/onebench",
+  "demoUrl": "https://KEDIKKGO.github.io/onebench/",
+  "upstream": "diyiwuyan/onebench",
+  "deployment": "github-pages-actions",
+  "registry": "https://raw.githubusercontent.com/diyiwuyan/onebench/main/packages/community-registry/registry.json"
+}

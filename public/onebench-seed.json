@@ -1,0 +1,150 @@
+{
+  "workspace": {
+    "version": "1.0.0",
+    "id": "7127928b-11c3-4d0c-b039-7de61a08425f",
+    "name": "团队工作台",
+    "sourcePack": "team-lead",
+    "intent": "我是团队运营经理，最想管理所有工作和各种项目备忘",
+    "profile": {
+      "displayName": "Roger",
+      "avatarId": "role"
+    },
+    "createdAt": "2026-09-13T14:08:49.531Z",
+    "updatedAt": "2026-09-13T14:08:49.533Z",
+    "theme": {
+      "id": "leadership-plum",
+      "name": "管理雾紫",
+      "accent": "#756783"
+    },
+    "layout": "focus-first",
+    "modules": [
+      {
+        "id": "calendar",
+        "enabled": true,
+        "placement": "home",
+        "size": "small",
+        "order": 0
+      },
+      {
+        "id": "weather",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "small",
+        "order": 1
+      },
+      {
+        "id": "tasks",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 2
+      },
+      {
+        "id": "quick-note",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 3
+      },
+      {
+        "id": "habits",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 4
+      },
+      {
+        "id": "news",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 5
+      },
+      {
+        "id": "profile",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 6
+      },
+      {
+        "id": "appearance",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 7
+      },
+      {
+        "id": "sync",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 8
+      },
+      {
+        "id": "settings",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 9
+      },
+      {
+        "id": "team",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 10
+      },
+      {
+        "id": "meetings",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 11
+      },
+      {
+        "id": "decisions",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 12
+      },
+      {
+        "id": "projects",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 13
+      },
+      {
+        "id": "analytics",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 14
+      },
+      {
+        "id": "goals",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "medium",
+        "order": 15
+      },
+      {
+        "id": "review",
+        "enabled": true,
+        "placement": "home",
+        "size": "medium",
+        "order": 16
+      },
+      {
+        "id": "files",
+        "enabled": true,
+        "placement": "sidebar",
+        "size": "wide",
+        "order": 17
+      }
+    ]
+  },
+  "edition": "basic"
+}
