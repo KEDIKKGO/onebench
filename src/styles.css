@@ -51,9 +51,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
   box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
-.side-rail nav { display: grid; width: 100%; gap: 12px; margin-top: 54px; }
-.side-rail nav button { min-height: 57px; gap: 4px; border-radius: 13px; font-size: 10px; }
-.side-rail nav button svg { font-size: 21px; }
+.side-rail nav { display: grid; width: 100%; flex: 1 1 auto; min-height: 0; gap: 8px; margin-top: 26px; overflow-y: auto; padding-bottom: 6px; scrollbar-width: none; }
+.side-rail nav::-webkit-scrollbar { display: none; }
+.side-rail nav button { min-height: 48px; gap: 3px; padding: 5px 2px; border-radius: 13px; font-size: 10px; }
+.side-rail nav button span { line-height: 1.25; }
+.side-rail nav button svg { font-size: 20px; }
 .side-rail nav button:hover, .side-rail nav button.active { color: var(--accent); background: var(--accent-soft); }
 .rail-settings { width: 44px; height: 44px; margin-top: auto; border: 1px solid var(--line); border-radius: 13px; font-size: 21px; }
 .rail-ai-toggle { margin-top: 0; }
