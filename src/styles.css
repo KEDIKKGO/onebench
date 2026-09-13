@@ -90,6 +90,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .ai-bubble.assistant { align-self: flex-start; background: var(--surface-2); }
 .ai-bubble.assistant.error { border-color: color-mix(in srgb, #c0392b 40%, var(--line)); color: #a02d1d; background: #fdf1ef; }
 .ai-bubble.pending { color: var(--muted); font-style: italic; }
+.ai-actions { display: grid; gap: 4px; margin-top: 8px; }
+.ai-actions span { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 8px; font-size: 10px; }
+.ai-actions span.ok { color: #2f6b1f; background: #eaf3de; }
+.ai-actions span.fail { color: #a02d1d; background: #fdf1ef; }
+.ai-actions svg { flex: 0 0 auto; }
 .ai-empty { display: grid; gap: 6px; align-content: start; justify-items: center; margin: auto; padding: 20px; color: var(--muted); font-size: 10px; text-align: center; }
 .ai-empty svg { font-size: 26px; color: var(--accent); }
 .ai-empty p { margin: 0; color: var(--ink); font-size: 12px; }

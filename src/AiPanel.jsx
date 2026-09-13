@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { GearSix, PaperPlaneRight, Robot, Sparkle, Trash, X } from '@phosphor-icons/react'
+import { CheckCircle, GearSix, PaperPlaneRight, Robot, Sparkle, Trash, X } from '@phosphor-icons/react'
 import {
   clearAiMessages,
   defaultAiConfig,
+  parseAiActions,
   persistAiMessages,
   sendAiChat,
 } from './lib/ai-chat'
 
 // 右侧常驻 AI 助理面板：不随左侧应用切换消失
-export function AiPanel({ open, onClose, provider, onProviderChange, config, onConfigChange, messages, setMessages, workspace, workspaceData }) {
+export function AiPanel({ open, onClose, provider, onProviderChange, config, onConfigChange, messages, setMessages, workspace, workspaceData, onAction }) {
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -34,7 +35,13 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
     setBusy(true)
     try {
       const reply = await sendAiChat({ provider, config, messages: nextMessages, workspace, workspaceData })
-      const done = [...nextMessages, { role: 'assistant', content: reply }]
+      const { clean, actions } = parseAiActions(reply)
+      const applied = []
+      for (const action of actions) {
+        const result = onAction ? onAction(action) : { ok: false, label: '面板未连接工作台数据' }
+        applied.push({ action, ...result })
+      }
+      const done = [...nextMessages, { role: 'assistant', content: clean, actions: applied }]
       setMessages(done)
       persistAiMessages(done)
     } catch (error) {
@@ -95,13 +102,22 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
           <div className="ai-empty">
             <Sparkle weight="duotone" />
             <p>你好，我是工作台里的 AI 助理。</p>
-            <small>可以问「我今天有哪些任务」，也可以让我帮你梳理项目、写周报。</small>
+            <small>可以问「我今天有哪些任务」，也可以直接说「帮我加一个明天上午开站会的任务」「把 XX 任务标记完成」。</small>
             <small>先在上方「本机 / 云端」里选好模型，点齿轮填写参数。</small>
           </div>
         )}
         {messages.map((message, index) => (
           <div className={`ai-bubble ${message.role}${message.error ? ' error' : ''}`} key={index}>
             {message.content}
+            {message.actions?.length > 0 && (
+              <div className="ai-actions">
+                {message.actions.map((entry, i) => (
+                  <span key={i} className={entry.ok ? 'ok' : 'fail'}>
+                    <CheckCircle weight={entry.ok ? 'fill' : 'bold'} /> {entry.label}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         ))}
         {busy && <div className="ai-bubble assistant pending">思考中…</div>}

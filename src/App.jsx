@@ -587,6 +587,35 @@ export function App() {
     updateData((data) => ({ ...data, tasks: data.tasks.map((item) => item.id === id ? { ...item, done: !item.done } : item) }))
   }
 
+  // AI 助理动作：把模型输出的 [ACTION] 指令落到工作台数据
+  function handleAiAction(action) {
+    const text = String(action.text || action.title || '').trim()
+    try {
+      if (action.type === 'add_task' && text) {
+        updateData((data) => ({ ...data, tasks: [...data.tasks, { id: crypto.randomUUID(), title: text, done: false }] }))
+        return { ok: true, label: `已新增任务：${text}` }
+      }
+      if (action.type === 'complete_task' && text) {
+        const keyword = text.toLowerCase()
+        const target = workspaceData.tasks.find((item) => !item.done && item.title.toLowerCase().includes(keyword))
+        if (!target) return { ok: false, label: `未找到未完成任务：${text}` }
+        updateData((data) => ({ ...data, tasks: data.tasks.map((item) => item.id === target.id ? { ...item, done: true } : item) }))
+        return { ok: true, label: `已完成任务：${target.title}` }
+      }
+      if (action.type === 'add_note' && text) {
+        updateData((data) => ({ ...data, quickNote: data.quickNote ? `${data.quickNote}\n${text}` : text }))
+        return { ok: true, label: `已写入快速记录：${text.slice(0, 40)}${text.length > 40 ? '…' : ''}` }
+      }
+      if (action.type === 'add_project' && text) {
+        updateData((data) => ({ ...data, projects: [...(data.projects || []), { title: text, meta: String(action.meta || '').slice(0, 40), progress: 0 }] }))
+        return { ok: true, label: `已新增项目：${text}` }
+      }
+      return { ok: false, label: `不支持的动作：${action.type}` }
+    } catch (error) {
+      return { ok: false, label: `执行失败：${String(error.message || error)}` }
+    }
+  }
+
   function toggleHabit(id) {
     updateData((data) => ({ ...data, habits: data.habits.map((item) => item.id === id ? { ...item, done: !item.done } : item) }))
   }
@@ -1449,6 +1478,7 @@ export function App() {
         setMessages={setAiMessages}
         workspace={workspace}
         workspaceData={workspaceData}
+        onAction={handleAiAction}
       />
 
       <nav className="mobile-nav" aria-label="手机底部导航">

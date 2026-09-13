@@ -52,17 +52,44 @@ export function clearAiMessages() {
 }
 
 function buildSystemPrompt(workspace, workspaceData) {
-  const tasks = (workspaceData.tasks || []).filter((item) => !item.done).slice(0, 12)
-    .map((item) => `- ${item.text || item.title || ''}`).join('\n')
+  const tasks = (workspaceData.tasks || []).slice(0, 12)
+    .map((item) => `- ${item.done ? '[已完成] ' : ''}${item.title}`).join('\n')
   const projects = (workspaceData.projects || []).slice(0, 8)
-    .map((item) => `- ${item.title || item.name || ''}${item.note ? `（${item.note}）` : ''}`).join('\n')
+    .map((item) => `- ${item.title}${item.meta ? `（${item.meta}）` : ''}`).join('\n')
   return [
     '你是「团队工作台」里内嵌的 AI 助理，帮助用户管理日常工作与项目。',
     `用户：${workspace.profile?.displayName || '朋友'}；工作台：${workspace.name}；定位：${workspace.intent || ''}。`,
-    tasks ? `当前未完成任务：\n${tasks}` : '',
+    tasks ? `当前任务列表：\n${tasks}` : '',
     projects ? `当前项目：\n${projects}` : '',
-    '回答保持简洁、可执行；涉及用户数据时基于上面列出的内容回答。',
+    '回答保持简洁、可执行。',
+    '【重要：你可以直接修改工作台数据】当用户要求新增/完成任务、记录想法或添加项目时，不要只口头描述，必须在回复的最后单独成行输出动作指令，格式为：',
+    '[ACTION] {"type":"add_task","text":"任务内容"}',
+    '支持的动作类型：',
+    '- add_task：新增一条任务，字段 text（必填）',
+    '- complete_task：把某条任务标记完成，字段 text 填该任务的关键词（必填）',
+    '- add_note：把内容写入快速记录，字段 text（必填）',
+    '- add_project：新增项目，字段 title（必填）、meta（备注，可选）',
+    '规则：动作指令放在回复最末尾，每行一条；只在用户明确表达"帮我加/完成/记录"意图时输出；正常聊天和回答问题时不要输出动作。示例：用户说"帮我加一个明天上午十点开站会的任务"，你在回复末尾输出：[ACTION] {"type":"add_task","text":"明天 10:00 站会"}',
   ].filter(Boolean).join('\n')
+}
+
+// 从模型回复中解析动作指令；返回 { clean, actions }
+export function parseAiActions(content) {
+  const actions = []
+  const lines = String(content || '').split('\n')
+  const kept = []
+  for (const line of lines) {
+    const match = line.match(/^\s*\[ACTION\]\s*(\{.*\})\s*$/)
+    if (match) {
+      try {
+        const parsed = JSON.parse(match[1])
+        if (parsed && typeof parsed.type === 'string') actions.push(parsed)
+        continue
+      } catch { /* 非法 JSON，按普通文本保留 */ }
+    }
+    kept.push(line)
+  }
+  return { clean: kept.join('\n').trim(), actions }
 }
 
 async function callLocalModel(config, messages) {
