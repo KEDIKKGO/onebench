@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CheckCircle, GearSix, PaperPlaneRight, Robot, Sparkle, Trash, X } from '@phosphor-icons/react'
+import { CheckCircle, GearSix, Microphone, PaperPlaneRight, Robot, SpeakerHigh, Sparkle, Stop, Trash, X } from '@phosphor-icons/react'
 import {
   clearAiMessages,
   defaultAiConfig,
@@ -7,13 +7,17 @@ import {
   persistAiMessages,
   sendAiChat,
 } from './lib/ai-chat'
+import { VoiceRecorder, isVoiceSupported, speakText, stopSpeaking, transcribeAudio } from './lib/voice'
 
 // 右侧常驻 AI 助理面板：不随左侧应用切换消失
 export function AiPanel({ open, onClose, provider, onProviderChange, config, onConfigChange, messages, setMessages, workspace, workspaceData, onAction }) {
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [recording, setRecording] = useState(false)
+  const [voiceStatus, setVoiceStatus] = useState('')
   const listRef = useRef(null)
+  const recorderRef = useRef(null)
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight
@@ -23,6 +27,59 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
 
   const updateConfig = (field) => (event) => {
     onConfigChange({ ...config, [field]: event.target.value })
+  }
+
+  const toggleFlag = (field) => () => {
+    onConfigChange({ ...config, [field]: !config[field] })
+  }
+
+  // 麦克风：点击开始录音，再点结束并转成文字
+  const toggleRecording = async () => {
+    if (recording) {
+      setRecording(false)
+      setVoiceStatus('识别中…')
+      try {
+        const blob = await recorderRef.current.stop()
+        const text = await transcribeAudio({
+          url: config.sttUrl,
+          key: config.sttKey || config.cloudKey,
+          model: config.sttModel,
+          blob,
+        })
+        setInput((current) => (current ? `${current} ${text}` : text))
+        setVoiceStatus('已转为文字，可直接发送')
+      } catch (error) {
+        setVoiceStatus(String(error.message || error))
+      }
+      return
+    }
+    if (!isVoiceSupported()) {
+      setVoiceStatus('当前环境不支持录音')
+      return
+    }
+    try {
+      recorderRef.current = new VoiceRecorder()
+      await recorderRef.current.start()
+      setRecording(true)
+      setVoiceStatus('正在听…说完点一下麦克风停止')
+    } catch (error) {
+      setVoiceStatus(String(error.message || error))
+    }
+  }
+
+  const speak = async (text) => {
+    try {
+      await speakText({
+        engine: config.ttsEngine,
+        ttsUrl: config.ttsUrl,
+        ttsModel: config.ttsModel,
+        ttsVoice: config.ttsVoice,
+        key: config.sttKey || config.cloudKey,
+        text,
+      })
+    } catch (error) {
+      setVoiceStatus(String(error.message || error))
+    }
   }
 
   const send = async () => {
@@ -44,6 +101,7 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
       const done = [...nextMessages, { role: 'assistant', content: clean, actions: applied }]
       setMessages(done)
       persistAiMessages(done)
+      if (config.autoSpeak && clean) speak(clean)
     } catch (error) {
       const failed = [...nextMessages, { role: 'assistant', content: String(error.message || error), error: true }]
       setMessages(failed)
@@ -90,10 +148,25 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
             <>
               <label>云端服务地址（OpenAI 兼容）<input value={config.cloudUrl} onChange={updateConfig('cloudUrl')} placeholder="https://api.openai.com" /></label>
               <label>模型名称<input value={config.cloudModel} onChange={updateConfig('cloudModel')} placeholder={defaultAiConfig.cloudModel} /></label>
-              <label>API Key<input type="password" value={config.cloudKey} onChange={updateConfig('cloudKey')} placeholder="sk-..." /></label>
               <small>提示：Key 仅保存在本机浏览器 localStorage，不会写入仓库或上传。</small>
             </>
           )}
+          <div className="ai-settings-divider">语音（识别与朗读）</div>
+          <label>语音识别服务地址<input value={config.sttUrl} onChange={updateConfig('sttUrl')} placeholder="https://api.siliconflow.cn/v1" /></label>
+          <label>识别模型<input value={config.sttModel} onChange={updateConfig('sttModel')} placeholder={defaultAiConfig.sttModel} /></label>
+          <label>识别 API Key（留空则复用云端模型的 Key）<input type="password" value={config.sttKey} onChange={updateConfig('sttKey')} placeholder="sk-..." /></label>
+          <label>朗读引擎<select value={config.ttsEngine} onChange={updateConfig('ttsEngine')}>
+            <option value="system">系统语音（免费，浏览器本地合成）</option>
+            <option value="cloud">云端语音（更自然，需 API Key）</option>
+          </select></label>
+          {config.ttsEngine === 'cloud' && (
+            <>
+              <label>语音合成模型<input value={config.ttsModel} onChange={updateConfig('ttsModel')} placeholder={defaultAiConfig.ttsModel} /></label>
+              <label>音色<input value={config.ttsVoice} onChange={updateConfig('ttsVoice')} placeholder={defaultAiConfig.ttsVoice} /></label>
+            </>
+          )}
+          <button className={`ai-switch ${config.autoSpeak ? 'on' : ''}`} type="button" onClick={toggleFlag('autoSpeak')}>{config.autoSpeak ? '自动朗读：开（AI 回复后自动念出来）' : '自动朗读：关（可点气泡上的喇叭手动朗读）'}</button>
+          <small>手机或电脑首次使用麦克风时，浏览器会询问权限，请选择允许。原生手机客户端可直接复用同一套接口。</small>
         </section>
       )}
 
@@ -118,16 +191,27 @@ export function AiPanel({ open, onClose, provider, onProviderChange, config, onC
                 ))}
               </div>
             )}
+            {message.role === 'assistant' && message.content && (
+              <div className="ai-bubble-tools">
+                <button type="button" onClick={() => speak(message.content)} aria-label="朗读这条回复"><SpeakerHigh weight="duotone" /> 朗读</button>
+                <button type="button" onClick={stopSpeaking} aria-label="停止朗读">停止</button>
+              </div>
+            )}
           </div>
         ))}
         {busy && <div className="ai-bubble assistant pending">思考中…</div>}
       </div>
 
+      {voiceStatus && <p className="ai-voice-status">{voiceStatus}</p>}
+
       <footer className="ai-input">
+        <button type="button" className={`ai-mic ${recording ? 'recording' : ''}`} onClick={toggleRecording} aria-label={recording ? '停止录音并识别' : '开始语音输入'} disabled={busy}>
+          {recording ? <Stop weight="fill" /> : <Microphone weight="bold" />}
+        </button>
         <textarea
           rows={2}
           value={input}
-          placeholder={provider === 'local' ? '连接本机模型对话…' : '连接云端模型对话…'}
+          placeholder={recording ? '正在录音…' : provider === 'local' ? '连接本机模型对话…' : '连接云端模型对话…'}
           onChange={(event) => setInput(event.target.value)}
           onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send() } }}
         />

@@ -10,6 +10,14 @@ export const defaultAiConfig = {
   cloudUrl: 'https://api.openai.com',
   cloudModel: 'gpt-4o-mini',
   cloudKey: '',
+  sttUrl: 'https://api.siliconflow.cn/v1',
+  sttModel: 'FunAudioLLM/SenseVoiceSmall',
+  sttKey: '',
+  ttsEngine: 'system',
+  ttsUrl: 'https://api.siliconflow.cn/v1',
+  ttsModel: 'FunAudioLLM/CosyVoice2-0.5B',
+  ttsVoice: 'FunAudioLLM/CosyVoice2-0.5B:alex',
+  autoSpeak: false,
 }
 
 export function readAiOpen() {
