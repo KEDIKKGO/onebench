@@ -5,6 +5,13 @@
   "title": "联合国新闻",
   "items": [
     {
+      "id": "un-news-zh-https://news.un.org/zh/story/2026/11/1143165",
+      "title": "强厄尔尼诺或致全球经济损失11万亿美元",
+      "meta": "联合国新闻 · 2026/11/9",
+      "url": "https://news.un.org/feed/view/zh/story/2026/11/1143165",
+      "publishedAt": "2026-11-09T12:00:00.000Z"
+    },
+    {
       "id": "un-news-zh-https://news.un.org/zh/story/2026/11/1143164",
       "title": "贸发会议：贸易合作有助于增强气候行动和经济韧性",
       "meta": "联合国新闻 · 2026/11/9",
@@ -206,15 +213,8 @@
       "meta": "联合国新闻 · 2026/11/4",
       "url": "https://news.un.org/feed/view/zh/story/2026/11/1143129",
       "publishedAt": "2026-11-04T12:00:00.000Z"
-    },
-    {
-      "id": "un-news-zh-https://news.un.org/zh/story/2026/11/1143128",
-      "title": "世卫组织：热带病防控取得进展",
-      "meta": "联合国新闻 · 2026/11/4",
-      "url": "https://news.un.org/feed/view/zh/story/2026/11/1143128",
-      "publishedAt": "2026-11-04T12:00:00.000Z"
     }
   ],
-  "updatedAt": "2026-11-09T20:45:31.153Z",
+  "updatedAt": "2026-11-10T04:07:37.994Z",
   "provider": "OneBench 公共资讯快照"
 }
